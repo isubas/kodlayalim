@@ -1,6 +1,10 @@
 Kodlayalım
 ===========
 
+## Proje Konusu
+
+Temel programlama eğitimi
+
 ## Giriş Bilgileri
 
 | Rol      | E-posta          | Parola |
