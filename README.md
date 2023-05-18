@@ -10,7 +10,7 @@ Kodlayalım
 
 ## Rollere göre yetenekler
 
-### Eğitimci
+## Eğitimci
 
 - Ders oluşurabilir
 - Dersi güncelleyebilir
@@ -24,7 +24,7 @@ Kodlayalım
 - Ders içeriklerine erişebilir
 
 
-### Tüm Kullanıcı Rolleri
+## Tüm Kullanıcı Rolleri
 
 - Tüm dersleri görüntüleyebilir
 - Profil sayfasını düzenleyebilir
