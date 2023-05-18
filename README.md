@@ -32,3 +32,22 @@ Temel programlama eğitimi
 
 - Tüm dersleri görüntüleyebilir
 - Profil sayfasını düzenleyebilir
+
+## Kurulum
+
+```bash
+pip3 install -r requirements.txt
+
+export FLASK_APP=./kodlayalim_app.py
+export FLASK_DEBUG=True
+
+flask run
+```
+
+[http://127.0.0.1:5000](http://127.0.0.1:5000) adresini ziyaret edebilirsiniz.
+
+### Not:
+
+- `direnv` paketini sisteme kurmanız halinde çevre değişkenleri her seferinde export etmenize gerek kalmaz. Bu değişkenleri .envrc dosyasından yönetebilirsiniz.
+
+> https://github.com/direnv/direnv
