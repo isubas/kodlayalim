@@ -1,0 +1,51 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="grid justify-items-center items-center">
+  <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="font-semibold text-3xl text-center text-gray-600">{{ course.code }} - Ders Düzenle</h2>
+      <hr>
+      <form action="/courses/{{course.code}}/edit" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-control w-full max-w-xs">
+          {{ form.name.label(class_="label") }}
+          {{ form.name(size=255, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.name.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+          {{ form.code.label(class_="label") }}
+          {{ form.code(size=100, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.code.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full mt-5">
+          {{ form.description.label(class_="label font-semibold") }}
+          {{ form.description(rows='10', class_="textarea textarea-bordered textarea-lg w-full") }}
+
+          <label class="label">
+            {% for error in form.description.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="flex justify-center">
+          <input type="submit" class="btn btn-success" value="Güncelle">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

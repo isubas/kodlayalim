@@ -1,0 +1,15 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+    <div class="hero min-h-screen bg-base-200">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Merhaba {{ current_user.full_name }},</h1>
+          <p class="py-6">
+            Kodlamayı seviyorsan ve kendini daha da geliştirmek istiyorsun işte olman gerektiği yerdesin.
+          </p>
+          <a href="{{ url_for('course.index') }}"class="drawer-button btn btn-primary">Hadi Birlikte Öğrenelim & Kodlayalım</a>
+        </div>
+      </div>
+    </div>
+{% endblock %}

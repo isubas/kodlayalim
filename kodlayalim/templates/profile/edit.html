@@ -1,0 +1,46 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="grid justify-items-center items-center">
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="font-semibold text-3xl text-center text-sky-700">Profil Düzenle</h2>
+      <div class="divider"></div>
+
+      <form action="/profile/edit" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        {% if current_user.avatar %}
+          <div class="avatar">
+            <div class="w-32 mask mask-squircle mb-5">
+              <img src="data:image/png;base64, {{current_user.avatar}}">
+            </div>
+          </div>
+        {% endif %}
+
+        {{ form.avatar(class_="file-input file-input-bordered file-input-accent file-input-sm w-full") }}
+
+        <div class="form-control w-full mt-5">
+          {{ form.about_me.label(class_="label font-semibold") }}
+          {{ form.about_me(rows='10', class_="textarea textarea-bordered textarea-lg w-full") }}
+
+          <label class="label">
+            {% for error in form.about_me.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label class="cursor-pointer label">
+            <span class="label-text">{{ form.email_public.label(class_="label font-semibold") }}</span>
+            {{ form.email_public(class_="checkbox checkbox-accent") }}
+          </label>
+        </div>
+
+        {{ form.submit(class_="btn btn-success") }}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

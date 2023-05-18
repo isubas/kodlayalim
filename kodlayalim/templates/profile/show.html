@@ -1,0 +1,55 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+  <div class="col-span-3 md:col-span-2 lg:col-span-2">
+    <div class="card w-100 bg-base-100 shadow-xl">
+      <div class="card-body">
+        <div class="avatar">
+          <div class="w-32 mask mask-squircle">
+            <img src="data:image/png;base64, {{current_user.avatar}}">
+          </div>
+        </div>
+
+        {% if current_user.username == user.username or user.email_public %}
+          <p class="text-gray-500"><strong>E-posta</strong></p>
+          {{ user.email }}
+        {% endif %}
+
+        {% if current_user.username == user.username %}
+          <p class="text-gray-500"><strong>E-posta Görünümü</strong></p>
+          {{ 'Açık' if user.email_public else 'Kapalı' }}
+        {% endif %}
+
+        <p class="text-gray-500"><strong>Son Giriş Tarihi</strong></p>
+        {% if user.last_login %}
+          {{ user.last_login.ctime() }}
+        {% else %}
+          Bu kullanıcı hiç giriş yapmadı.
+        {% endif %}
+
+        <p class="text-gray-500"><strong>Rol</strong></p>
+        <div class="badge badge-secondary">{{ user.role.name | upper }}</div>
+
+        {% if current_user.username == user.username %}
+          <div class="divider"></div>
+          <a href="{{ url_for('profile.edit') }}" class="btn btn-default btn-sm">Düzenle</a>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+  <div class="col-span-3 md:col-span-2 lg:col-span-4">
+    <div class="card w-100 bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Hakkımda</h2>
+        <hr>
+        <div>
+          {{ user.about_me }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

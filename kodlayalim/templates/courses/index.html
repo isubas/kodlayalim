@@ -1,0 +1,7 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+  {% for course in courses %}
+    {% include "courses/_course.html" %}
+  {% endfor %}
+{% endblock %}

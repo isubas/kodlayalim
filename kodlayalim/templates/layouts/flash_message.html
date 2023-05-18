@@ -1,0 +1,12 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+<div class="toast toast-end transition ease-in-out delay-150 transition-all">
+  {% if messages %}
+  {% for category, message in messages %}
+  <div class="alert alert-{{ 'info' if category == 'message' else category }} text-white">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+{% endwith %}
+

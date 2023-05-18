@@ -1,0 +1,90 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="grid justify-items-center items-center">
+  <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="font-semibold text-3xl text-center text-gray-600">Kayıtlanma Formu</h2>
+      <hr>
+      <form action="/auth/register" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-control w-full max-w-xs">
+          {{ form.username.label(class_="label") }}
+          {{ form.username(size=64, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.username.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+          {{ form.email.label(class_="label") }}
+          {{ form.email(size=120, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.email.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+          {{ form.first_name.label(class_="label") }}
+          {{ form.first_name(size=100, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.first_name.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+          {{ form.last_name.label(class_="label") }}
+          {{ form.last_name(size=100, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.last_name.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+          {{ form.password.label(class_="label") }}
+          {{ form.password(size=32, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.password.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+          {{ form.password2.label(class_="label") }}
+          {{ form.password2(size=32, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.password2.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="flex justify-center">
+          {{ form.submit(class_="btn btn-success") }}
+        </div>
+      </form>
+
+      <div class="divider">VEYA</div>
+
+      <div class="flex justify-center">
+        <a href="{{ url_for('auth.login') }}">Giriş Yap</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
