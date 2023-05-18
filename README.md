@@ -8,9 +8,9 @@ Kodlayalım
 | Eğitimci | teacher@acme.com | 123456 |
 | Öğrenci  | student@acme.com | 123456 |
 
-## Rollere göre yetenekler
+## Rollere göre yetenekler
 
-## Eğitimci
+### Eğitimci
 
 - Ders oluşurabilir
 - Dersi güncelleyebilir
@@ -24,7 +24,7 @@ Kodlayalım
 - Ders içeriklerine erişebilir
 
 
-## Tüm Kullanıcı Rolleri
+### Tüm Kullanıcı Rolleri
 
 - Tüm dersleri görüntüleyebilir
 - Profil sayfasını düzenleyebilir
