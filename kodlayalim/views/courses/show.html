@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+  {% if course.owner == current_user %}
+    <a class="btn btn-warning text-white" href="{{url_for('course.edit', course_id=course.id)}}"><i class="fa-solid fa-pencil"></i>Düzenle</a>
+    <a class="btn btn-primary text-white" href="{{url_for('section.new', course_id=course.id)}}"><i class="fa-solid fa-plus"></i>Bölüm Ekle</a>
+  {% endif %}
+
+  <div class="grid">
+    <h2 class="font-semibold text-3xl text-center text-sky-700 my-5">{{ course.name }}</h2>
+
+    <div class="collapse bg-base-200">
+      <input type="checkbox" checked="true" />
+      <div class="collapse-title text-xl font-medium text-slate-600">
+        <i class="fa-solid fa-book-open "></i> Ders Açıklaması
+      </div>
+      <div class="collapse-content">
+        {{ course.description | safe }}
+      </div>
+    </div>
+
+    {% if current_answer %}
+      <div class="alert alert-info shadow-lg mt-5 text-slate-100">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>
+          <h3>Sınav Puanınız: <span class="font-bold text-xl">{{ current_answer.score }}</span></h3>
+          <div class="text-xs">Quiz sınavını tamamlandığınız için tekrardan katılamazsınız.</div>
+        </div>
+      </div>
+    {% elif course.is_questions_exists() %}
+      <div class="alert shadow-lg mt-5">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>
+          <h3 class="font-bold">Ders Quiz Sınavı</h3>
+          <div class="text-xs">Dersi tamamlayabilmen için sınava katılman gerekiyor. Sınava sadece 1 kez katılabilisin. Unutma!</div>
+          {% if course.owner == current_user %}
+            <div class="text-xs text-red-300 font-bold mt-1">Ders sahibi olduğunuz için sınav sonucunuz veritabanına kayıt edilmez. Yalnızca öğrenci rolüne sahip kullanıcıların sınav sonuçları sisteme kayıt edilir.</div>
+          {% endif %}
+        </div>
+        <a class="btn btn-success text-white"
+          href="{{url_for('quiz.index', course_id=course.id)}}">
+          <i class="fa-solid fa-question"></i> Sınava Katıl
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="grid grid-cols-2 gap-4">
+      {% for section in sections %}
+        {% include "courses/_section.html" %}
+      {% endfor %}
+    </div>
+
+    <div class="flex justify-center join mt-5">
+      {% if sections.prev_num %}
+        <a href="{{url_for('course.show', course_id=course.id, page=sections.prev_num)}}" class="join-item btn">Önceki</a>
+      {% endif %}
+
+      {% for p in sections.iter_pages() %}
+        {% if p %}
+          {% if p == sections.page %}
+            <button class="join-item btn btn-active">{{p}}</button>
+          {% else %}
+            <a href="{{url_for('course.show', course_id=course.id, page=p)}}" class="join-item btn">{{p}}</a>
+          {% endif %}
+        {% else %}
+          <button class="join-item btn btn-disabled">...</button>
+        {% endif %}
+      {% endfor %}
+
+      {% if sections.next_num %}
+        <a href="{{url_for('course.show', course_id=course.id, page=sections.next_num)}}" class="join-item btn">Sonraki</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

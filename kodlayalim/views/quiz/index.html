@@ -1,0 +1,29 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<h2 class="font-semibold text-3xl text-center text-sky-700 my-5">Quiz Sınavı</h2>
+<form method="POST">
+  {{ form.csrf_token }}
+
+  {% for question in questions %}
+    <div class="card bg-base-100 shadow-xl mb-5">
+      <div class="card-body">
+        <p><strong>{{ loop.index }}. Soru</strong></p>
+        <div class="bg-gray-50 p-5 my-2">
+          {{ question.content }}
+        </div>
+        {% for i in ('a', 'b', 'c', 'd') %}
+          <label class="label cursor-pointer justify-start">
+            <input type="radio" class="radio" name="answer-{{question.id}}" value="{{i}}">
+            <span class="label-text ml-5">{{question['option_'+i]}}</span>
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+  <div class="flex justify-center">
+    {{ form.submit(class_="btn btn-success") }}
+  </div>
+</form>
+{% endblock %}
+

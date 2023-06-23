@@ -1,0 +1,21 @@
+<div class="card w-100 bg-slate-100 shadow-xl mt-10 overflow-auto">
+  <div class="card-body">
+    {% if course.owner == current_user %}
+      <div class="card-actions mb-5">
+        <a class="btn btn-active btn-accent btn-sm" href="{{url_for('section.edit', course_id=course.id, sid=section.id)}}"><i class="fa-solid fa-pencil text-white"></i></a>
+        <a class="btn btn-active btn-secondary btn-sm" href="{{url_for('section.delete', course_id=course.id, sid=section.id)}}"><i class="fa-solid fa-trash text-white"></i></a>
+      </div>
+    {% endif %}
+
+
+    <div class="flex flex-col	justify-between h-full">
+      <h2 class="card-title font-semibold text-amber-900 drop-shadow-xl mb-5"> {{ section.title }}</h2>
+
+      <div class="course-content">
+        {{ section.body | safe }}
+      </div>
+
+      {% include "sections/_comments.html" %}
+    </div>
+  </div>
+</div>

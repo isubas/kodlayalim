@@ -1,0 +1,29 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="grid justify-items-center items-center">
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="font-semibold text-3xl text-center text-gray-600">{{ section.title }} Başlıklı Bölüme Yorum Yap</h2>
+      <hr>
+      <form action="/courses/{{section.course_id}}/sections/{{section.id}}/comments" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-control w-full">
+          {{ form.body.label(class_="label") }}
+          {{ form.body(size=255, class_="input input-bordered w-full") }}
+
+          <label class="label">
+            {% for error in form.body.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="flex justify-center">
+          {{ form.submit(class_="btn btn-success") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

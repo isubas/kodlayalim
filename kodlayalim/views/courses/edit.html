@@ -6,7 +6,7 @@
     <div class="card-body">
       <h2 class="font-semibold text-3xl text-center text-gray-600">{{ course.code }} - Ders Düzenle</h2>
       <hr>
-      <form action="/courses/{{course.code}}/edit" method="post">
+      <form action="/courses/{{course.id}}/edit" method="post">
         {{ form.hidden_tag() }}
         <div class="form-control w-full max-w-xs">
           {{ form.name.label(class_="label") }}

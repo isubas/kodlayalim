@@ -1,0 +1,89 @@
+{% extends "layouts/main.html" %}
+{% block content %}
+  <h2 class="font-semibold text-3xl text-center text-sky-700 my-5">Postalar</h2>
+
+  <a href="{{url_for('mail.write')}}" class="btn btn-primary btn-sm mb-5 text-white"><i class="fa-solid fa-pen-nib"></i>Yeni posta yaz</a>
+
+  <div class="tabs">
+    <a class="tab tab-lifted {% if mailbox=='inbox' %} tab-active {% endif %}" href="{{url_for('mail.index', mailbox='inbox')}}">Gelen Kutusu</a>
+    <a class="tab tab-lifted {% if mailbox=='outbox' %} tab-active {% endif %}" href="{{url_for('mail.index', mailbox='outbox')}}">Giden Kutusu</a>
+  </div>
+
+  <div class="flex gap-2">
+    <div class="mt-5 flex-auto">
+      <table class="table">
+        <thead class="bg-base-200">
+          <tr>
+            <th>{% if mailbox=='inbox' %}Gönderen{% else %}Alan{%endif%}</th>
+            <th>Konu</th>
+            <th>Gönderi Tarihi</th>
+            <th>İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for message in messages %}
+            <tr {% if mailbox=='inbox' and not message.read %}class="bg-green-100"{% endif %}>
+              <td>{% if mailbox=='inbox' %}{{message.sender.email}}{% else %}{{message.receiver.email}}{%endif%}</td>
+              <td>{{message.title}}</td>
+              <td>{{message.timestamp.ctime()}}</td>
+              <td>
+                <a href="{{url_for('mail.index', mailbox=mailbox, show=message.id, page=messages.page)}}"
+                   class="btn btn-success btn-sm text-white">Oku
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="flex justify-center join mt-5">
+        {% if messages.prev_num %}
+          <a href="{{url_for('mail.index', mailbox=mailbox, page=messages.prev_num)}}" class="join-item btn">Önceki</a>
+        {% endif %}
+
+        {% for p in messages.iter_pages() %}
+          {% if p %}
+            {% if p == messages.page %}
+              <button class="join-item btn btn-active">{{p}}</button>
+            {% else %}
+              <a href="{{url_for('mail.index', mailbox=mailbox, page=p)}}" class="join-item btn">{{p}}</a>
+            {% endif %}
+          {% else %}
+            <button class="join-item btn btn-disabled">...</button>
+          {% endif %}
+        {% endfor %}
+
+        {% if messages.next_num %}
+          <a href="{{url_for('mail.index', mailbox=mailbox, page=messages.next_num)}}" class="join-item btn">Sonraki</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="flex-auto">
+      {% if show_message %}
+        <div class="card w-full bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h3 class="font-semibold text-xl text-gray-600">Konu: {{ show_message.title }}</h3>
+            <hr>
+
+            <p><strong>Alan</strong>: {{show_message.receiver.email}}</p>
+            <p><strong>Gönderen</strong>: {{show_message.sender.email}}</p>
+            <p><strong>Mesaj</strong>:</p>
+
+            <div class="bg-gray-100 p-5 rounded-md">
+              {{show_message.body | safe}}
+            </div>
+
+            {% if mailbox=='inbox' %}
+              <a href="{{url_for('mail.write', reply_id=show_message.id)}}"
+                 class="btn btn-primary btn-sm mt-1 text-white">
+                <i class="fa-solid fa-pen-nib"></i>Cevapla
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+

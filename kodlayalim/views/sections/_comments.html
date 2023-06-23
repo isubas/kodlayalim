@@ -1,0 +1,37 @@
+<div class="mt-5">
+  {% if section.comments.count() %}
+  <div class="collapse bg-base-200">
+    <input type="checkbox" />
+    <div class="collapse-title text-xl font-medium text-slate-500">
+      <i class="fa-solid fa-comments"></i> Yorumlar <div class="badge badge-info text-white">{{ section.comments.count() }}</div>
+    </div>
+    <div class="collapse-content">
+      <div class="overflow-y-auto h-40">
+        <ul class="flex flex-col">
+          {% for comment in section.comments %}
+            <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
+              <footer class="flex justify-between items-center mb-2">
+                  <div class="flex items-center">
+                      <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
+                              class="mr-2 w-6 h-6 rounded-full"
+                              src="data:image/png;base64, {{comment.author.avatar}}"
+                              alt="{{comment.author.full_name}}">{{comment.author.full_name}}</p>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">
+                        <time pubdate datetime="{{comment.timestamp.ctime()}}" title="{{comment.timestamp.ctime()}}">{{comment.timestamp.ctime()}}</time>
+                      </p>
+                  </div>
+              </footer>
+              <p class="text-gray-500 dark:text-gray-400">{{comment.body }}</p>
+            </article>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <a href="{{url_for('section.comment', course_id=section.course_id, sid=section.id)}}"
+    class="btn btn-outline btn-primary btn-sm float-right mt-5">
+    <i class="fa-solid fa-comment"></i> Yorum Yaz
+  </a>
+</div>

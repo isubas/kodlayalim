@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
-  {% for course in courses %}
-    {% include "courses/_course.html" %}
-  {% endfor %}
+  {% with pagination_path="course.index" %}
+    {% include "courses/_courses.html" %}
+  {% endwith %}
 {% endblock %}

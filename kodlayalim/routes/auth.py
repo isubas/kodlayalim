@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from flask import Blueprint, request, url_for
@@ -25,6 +26,10 @@ def login():
             db.session.commit()
 
             login_user(user, remember=form.remember_me.data)
+
+            if not os.path.exists(user.upload_dir):
+                os.mkdir(user.upload_dir)
+
             flash('Başarıyla giriş yapıldı.', 'success')
 
             next_page = request.args.get('next')

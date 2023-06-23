@@ -3,7 +3,7 @@ from flask import flash, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
 
 from kodlayalim.decorators import authorize
-from kodlayalim.models import db, Course
+from kodlayalim.models import db, Course, CourseSection, Answer
 from kodlayalim.forms import CourseForm
 
 course_bp = Blueprint('course', __name__)
@@ -11,14 +11,16 @@ course_bp = Blueprint('course', __name__)
 @course_bp.route('/')
 @login_required
 def index():
-    courses = Course.query.all()
+    page = request.args.get('page', 1, type=int)
+    courses = Course.query.order_by(Course.name.asc()).paginate(page=page, per_page=4, error_out=False)
     return render_template('courses/index.html', title='Dersler', courses=courses)
 
 @course_bp.route('/my')
 @login_required
 @authorize('teacher')
 def my():
-    courses = current_user.courses.all()
+    page = request.args.get('page', 1, type=int)
+    courses = current_user.courses.order_by(Course.name.asc()).paginate(page=page, per_page=4, error_out=False)
     return render_template('courses/my.html', title='Derslerim', courses=courses)
 
 @course_bp.route('/new', methods=['GET', 'POST'])
@@ -44,22 +46,25 @@ def create():
 
     return render_template('courses/new.html', title='Derslerim', form=form)
 
-@course_bp.route('/<code>')
+@course_bp.route('/<int:course_id>')
 @login_required
-def detail(code):
-    course = Course.query.filter_by(code=code).first()
+def show(course_id):
+    page = request.args.get('page', 1, type=int)
+    course = Course.query.get(course_id)
+    sections = course.sections.order_by(CourseSection.order.asc()).paginate(page=page, per_page=2, error_out=False)
+    current_answer = Answer.query.filter_by(user_id=current_user.id, course_id=course_id).first()
 
     if not course:
         flash("Böyle bir ders bulunamadı",  "error")
         return redirect(url_for('course.index'))
 
-    return render_template('courses/detail.html', title=course.name, course=course)
+    return render_template('courses/show.html', title=course.name, course=course, sections=sections, current_answer=current_answer)
 
-@course_bp.route('/<code>/edit', methods=['GET', 'POST'])
+@course_bp.route('/<int:course_id>/edit', methods=['GET', 'POST'])
 @login_required
 @authorize('teacher')
-def edit(code):
-    course = Course.query.filter_by(code=code).first()
+def edit(course_id: int):
+    course = Course.query.get(course_id)
 
     if not course:
         flash("Böyle bir ders bulunamadı",  "error")
@@ -80,6 +85,6 @@ def edit(code):
             db.session.commit()
 
             flash('Ders başarıyla güncelledi', 'success')
-            return redirect(url_for('course.detail', code=course.code))
+            return redirect(url_for('course.show', course_id=course.id))
 
     return render_template('courses/edit.html', title='{} Dersini Güncelle'.format(course.code), course=course, form=form)

@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, EmailField, FileField, PasswordField, StringField, SubmitField, TextAreaField
+from flask_login import current_user
+from wtforms import BooleanField, EmailField, FileField, PasswordField, \
+StringField, SubmitField, TextAreaField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 
-from kodlayalim.models import User, Course
+from kodlayalim.models import User
 
 class LoginForm(FlaskForm):
     email = EmailField('E-posta', validators=[DataRequired('Bu alan gerekli')])
@@ -40,3 +42,31 @@ class CourseForm(FlaskForm):
     code = StringField('Ders Kodu', validators=[DataRequired('Bu alan gerekli'), Length(max=100, message='Ders kodu en fazla 255 karakterden oluşmalı')])
     description = TextAreaField('Açıklama', validators=[Length(max=1024)])
     submit = SubmitField('Oluştur')
+
+class CourseSectionForm(FlaskForm):
+    title = StringField('Konu Başlığı', validators=[DataRequired(message="Bu alan gerekli")])
+    body = TextAreaField('İçerik', render_kw = {'rows': '5'})
+    order = IntegerField('Sırası')
+    submit = SubmitField('Kaydet')
+
+class FileUploadForm(FlaskForm):
+    file = FileField("Dosya Seç", validators=[DataRequired(message="Bu alan gerekli")])
+    submit = SubmitField('Yükle')
+
+class CommentForm(FlaskForm):
+    body = TextAreaField('Yorum', validators=[DataRequired(message="Bu alan gerekli")])
+    submit = SubmitField('Kaydet')
+
+class MailForm(FlaskForm):
+    receiver = SelectField('Alıcı', choices=[])
+    title = StringField('Başlık', validators=[DataRequired(message="Bu alan gerekli")])
+    body = TextAreaField('İleti', render_kw = {'rows': '10'})
+    submit = SubmitField('Gönder')
+
+    def __init__(self):
+        super(MailForm, self).__init__()
+        userlist = User.query.filter(User.id != current_user.id).order_by(User.first_name.asc()).all()
+        self.receiver.choices = [(str(user.id), user.full_name) for user in userlist]
+
+class QuizForm(FlaskForm):
+    submit = SubmitField('Kaydet')

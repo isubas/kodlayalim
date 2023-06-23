@@ -1,0 +1,27 @@
+<div class="grid grid-cols-2 gap-4">
+  {% for course in courses %}
+    {% include "courses/_course.html" %}
+  {% endfor %}
+</div>
+
+<div class="flex justify-center join mt-5">
+  {% if courses.prev_num %}
+    <a href="{{url_for(pagination_path, page=courses.prev_num)}}" class="join-item btn">Önceki</a>
+  {% endif %}
+
+  {% for p in courses.iter_pages() %}
+    {% if p %}
+      {% if p == courses.page %}
+        <button class="join-item btn btn-active">{{p}}</button>
+      {% else %}
+        <a href="{{url_for(pagination_path, page=p)}}" class="join-item btn">{{p}}</a>
+      {% endif %}
+    {% else %}
+      <button class="join-item btn btn-disabled">...</button>
+    {% endif %}
+  {% endfor %}
+
+  {% if courses.next_num %}
+    <a href="{{url_for(pagination_path, page=courses.next_num)}}" class="join-item btn">Sonraki</a>
+  {% endif %}
+</div>

@@ -1,9 +1,9 @@
-<div class="card w-96 bg-primary text-primary-content mb-5">
+<div class="card bg-primary text-primary-content">
   <div class="card-body">
     <h2 class="card-title">{{ course.name }} ({{ course.code }})</h2>
     <p>{{ course.description | truncate(50, True, '...')}}</p>
     <div class="card-actions justify-end">
-      <a class="btn" href="{{url_for('course.detail', code=course.code)}}">Görüntüle</a>
+      <a class="btn" href="{{url_for('course.show', course_id=course.id)}}"><i class="fa-solid fa-eye"></i> Görüntüle</a>
     </div>
   </div>
 </div>

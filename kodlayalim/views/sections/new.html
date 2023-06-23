@@ -1,0 +1,61 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<a href="/courses/{{course.id}}" class="btn btn-secondary btn-sm"><i class="fa-solid fa-arrow-left"></i> Geri</a>
+
+<div class="grid justify-items-center items-center">
+  <div class="card w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="font-semibold text-3xl text-center text-gray-600">{{ course.name }} için Bölüm Oluşturma</h2>
+      <hr>
+      <form action="/courses/{{course.id}}/sections/new" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-control w-full max-w-xs">
+          {{ form.title.label(class_="label") }}
+          {{ form.title(size=255, class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.title.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full mt-5">
+          {{ form.body.label(class_="label font-semibold") }}
+          {{ form.body(class_="textarea textarea-bordered textarea-lg w-full") }}
+
+          <label class="label">
+            {% for error in form.body.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+          {{ form.order.label(class_="label") }}
+          {{ form.order(class_="input input-bordered w-full max-w-xs") }}
+
+          <label class="label">
+            {% for error in form.order.errors %}
+              <span class="label-text-alt text-error">{{ error }}</span>
+            {% endfor %}
+          </label>
+        </div>
+
+        <div class="flex justify-center">
+          {{ form.submit(class_="btn btn-success") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  tinymce.init({
+    selector:'#body',
+    plugins: 'powerpaste casechange searchreplace autolink directionality visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
+    toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify'
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<a href="/courses/{{course.id}}" class="btn btn-secondary btn-sm"><i class="fa-solid fa-arrow-left"></i> Geri</a>
+
+<div class="grid justify-items-center items-center">
+  <div class="card w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="font-semibold text-3xl text-center text-gray-600">{{ course.name }} için Bölüm GÜncelle</h2>
+      <hr>
+      <form action="/courses/{{course.id}}/sections/{{section.id}}/edit" method="post">
+        {% include "sections/_form.html" %}
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  tinymce.init({
+    selector:'#body',
+    plugins: 'powerpaste casechange searchreplace autolink directionality visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
+    toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify'
+  })
+</script>
+{% endblock %}

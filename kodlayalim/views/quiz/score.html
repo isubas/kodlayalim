@@ -1,0 +1,20 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<div class="flex justify-center">
+  <label for="result" class="btn btn-success">Test Sonucunu Görüntüle</label>
+</div>
+
+<input type="checkbox" id="result" class="modal-toggle" checked="true"/>
+<div class="modal">
+  <div class="modal-box">
+    <h2 class="text-lg font-bold text-teal-500">Quiz Sınav Sonucunuz</h2>
+    <hr>
+    <p><strong>Cevaplanan Soru Sayısı</strong>: {{answer_number}}</p>
+    <p><strong>Doğru Cevap Sayısı</strong>: {{correct_answer_number}}</p>
+    <p><strong>Aldığınız Puan</strong>: {{total_score}}</p>
+  </div>
+  <label class="modal-backdrop" for="result">Close</label>
+</div>
+{% endblock %}

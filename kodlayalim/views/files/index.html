@@ -1,0 +1,40 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+  <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mb-5">Dosyalarım</h2>
+
+  <div class="card w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+      <form method="post" enctype='multipart/form-data'>
+        {{ form.hidden_tag() }}
+        {{ form.file(class_="file-input file-input-bordered file-input-primary  max-w-xs") }}
+
+        {{ form.submit(class_="btn btn-success") }}
+      </form>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto mt-5">
+    <table class="table">
+      <thead class="bg-base-200">
+        <th>Dosya Adı</th>
+        <th>Boyut (Kb)</th>
+        <th>Yükleme Tarihi</th>
+        <th>İşlemler</th>
+      </thead>
+      <tbody>
+        {% for file_path in files.glob('*') %}
+          <tr>
+            <td>{{ file_path.relative_to(current_user.upload_dir) }}</td>
+            <td>{{ file_path.stat().st_size}}</td>
+            <td>{{ file_path.stat().st_mtime | get_time }}</td>
+            <td>
+              <a href="{{url_for('files.download', filename=file_path.relative_to(current_user.upload_dir))}}" class="btn btn-info btn-xs"><i class="fa-solid fa-download text-white"></i></a>
+              <a href="{{url_for('files.delete', filename=file_path.relative_to(current_user.upload_dir))}}" class="btn btn-error btn-xs"><i class="fa-solid fa-trash text-white"></i></a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

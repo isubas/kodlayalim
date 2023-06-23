@@ -1,0 +1,37 @@
+{{ form.hidden_tag() }}
+<div class="form-control w-full max-w-xs">
+  {{ form.title.label(class_="label") }}
+  {{ form.title(size=255, class_="input input-bordered w-full max-w-xs") }}
+
+  <label class="label">
+    {% for error in form.title.errors %}
+      <span class="label-text-alt text-error">{{ error }}</span>
+    {% endfor %}
+  </label>
+</div>
+
+<div class="form-control w-full mt-5">
+  {{ form.body.label(class_="label font-semibold") }}
+  {{ form.body(class_="textarea textarea-bordered textarea-lg w-full") }}
+
+  <label class="label">
+    {% for error in form.body.errors %}
+      <span class="label-text-alt text-error">{{ error }}</span>
+    {% endfor %}
+  </label>
+</div>
+
+<div class="form-control w-full max-w-xs">
+  {{ form.order.label(class_="label") }}
+  {{ form.order(class_="input input-bordered w-full max-w-xs") }}
+
+  <label class="label">
+    {% for error in form.order.errors %}
+      <span class="label-text-alt text-error">{{ error }}</span>
+    {% endfor %}
+  </label>
+</div>
+
+<div class="flex justify-center">
+  {{ form.submit(class_="btn btn-success") }}
+</div>

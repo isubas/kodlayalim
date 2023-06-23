@@ -18,6 +18,8 @@ Temel programlama eğitimi
 
 - Ders oluşurabilir
 - Dersi güncelleyebilir
+- Derse bölüm ekleyebilir, güncelleyebilir ve silebilir.
+- Ders sınavını test edebilir.
 
 > Ders oluşturabilmek için sağ üst köşede bulunan menüden Derslerim bağlantısına tıklamanız gerekmektedir.
 
@@ -26,12 +28,14 @@ Temel programlama eğitimi
 
 - Sistemdeki dersleri görüntüleyebilir
 - Ders içeriklerine erişebilir
-
+- Sınava katılabilir
 
 ### Tüm Kullanıcı Rolleri
 
 - Tüm dersleri görüntüleyebilir
 - Profil sayfasını düzenleyebilir
+- E-posta gönderebilir
+- Ders konularına yorum yapabilir
 
 ## Kurulum
 
